@@ -1,0 +1,12 @@
+README.md
+pyproject.toml
+app/__init__.py
+app/main.py
+app/core/__init__.py
+app/core/config.py
+meta_mcp.egg-info/PKG-INFO
+meta_mcp.egg-info/SOURCES.txt
+meta_mcp.egg-info/dependency_links.txt
+meta_mcp.egg-info/entry_points.txt
+meta_mcp.egg-info/requires.txt
+meta_mcp.egg-info/top_level.txt

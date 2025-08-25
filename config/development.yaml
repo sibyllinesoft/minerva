@@ -1,0 +1,140 @@
+# Meta MCP Development Configuration
+# This file defines the development profile with fast, local-first settings
+
+server:
+  host: "0.0.0.0"
+  port: 8000
+  workers: 1
+  reload: true
+  log_level: "INFO"
+  cors_origins:
+    - "http://localhost:3000"
+    - "http://localhost:8080"
+
+database:
+  url: "postgresql+asyncpg://metamcp:metamcp_dev@localhost:5432/metamcp"
+  pool_size: 10
+  max_overflow: 20
+  echo: false  # Set to true for SQL debugging
+
+# Selection modes with different latency/quality tradeoffs
+selection_modes:
+  fast:
+    bm25_candidates: 24
+    dense_candidates: 16
+    rerank_candidates: 16
+    expose_tools: 5
+    enable_planner: false
+    timeout_ms: 200
+    
+  balanced:
+    bm25_candidates: 48
+    dense_candidates: 32
+    rerank_candidates: 32
+    expose_tools: 8
+    enable_planner: false
+    timeout_ms: 500
+    
+  thorough:
+    bm25_candidates: 96
+    dense_candidates: 64
+    rerank_candidates: 64
+    expose_tools: 10
+    enable_planner: true
+    timeout_ms: 2000
+
+# Model configuration
+models:
+  embeddings:
+    provider: "onnx_local"
+    model_path: "models/sentence-transformer-384.onnx"
+    dimensions: 384
+    batch_size: 32
+    device: "auto"  # cuda, mps, cpu, or auto
+    
+  reranker:
+    provider: "onnx_local" 
+    model_path: "models/cross-encoder.onnx"
+    batch_size: 16
+    device: "auto"
+    
+  planner:
+    provider: "off"  # off, openai, anthropic, or local
+    # api_key: "${PLANNER_API_KEY}"
+    # model: "gpt-4-turbo-preview"
+    max_retries: 2
+    timeout_seconds: 30
+
+# Search and ranking parameters
+search:
+  # Hybrid search weights
+  bm25_weight: 0.7
+  dense_weight: 0.3
+  
+  # MMR diversification
+  mmr_lambda: 0.3
+  
+  # Utility scoring coefficients  
+  utility_scoring:
+    relevance_weight: 0.5    # α - base relevance score
+    success_weight: 0.2      # β - historical success rate
+    latency_penalty: 0.2     # γ - p95 latency penalty
+    risk_penalty: 0.1        # ρ - risk/deprecation penalty
+    
+  # Cache settings
+  cache_ttl_seconds: 300
+  cache_size_mb: 64
+
+# Data storage paths
+storage:
+  data_dir: "./data"
+  bm25_index_dir: "./data/bm25"
+  snapshots_dir: "./data/snapshots" 
+  logs_dir: "./logs"
+
+# Security and secrets
+security:
+  admin_username: "admin"
+  admin_password: "${ADMIN_PASSWORD:-admin123}"  # Change in production!
+  secret_key: "${SECRET_KEY:-dev-secret-key-change-me}"
+  
+  # Secret store configuration
+  secrets:
+    provider: "file_vault"  # keychain, secret_service, file_vault
+    vault_path: "./data/secrets.vault"
+    # For non-interactive mode, set VAULT_PASSWORD env var
+    
+# Ingestion settings
+ingestion:
+  refresh_interval_hours: 24
+  concurrent_origins: 5
+  request_timeout_seconds: 30
+  retry_attempts: 3
+  retry_backoff_seconds: 2
+  
+  # Health probes
+  enable_probes: true
+  probe_timeout_seconds: 10
+  max_probe_concurrency: 3
+
+# Observability
+observability:
+  enable_tracing: true
+  enable_metrics: true
+  
+  # OpenTelemetry configuration
+  otel:
+    service_name: "meta-mcp-dev"
+    service_version: "0.1.0"
+    
+  # Prometheus metrics
+  metrics:
+    endpoint: "/metrics"
+    buckets: [0.005, 0.01, 0.025, 0.05, 0.075, 0.1, 0.25, 0.5, 0.75, 1.0, 2.5, 5.0, 7.5, 10.0]
+
+# Circuit breaker settings
+circuit_breakers:
+  default:
+    failure_threshold: 5
+    timeout_seconds: 60
+    expected_recovery_seconds: 30
