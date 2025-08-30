@@ -1,0 +1,66 @@
+# OS/IDE
+.DS_Store
+Thumbs.db
+Icon?
+.idea/
+.vscode/
+*.code-workspace
+
+# Logs & temp files
+*.log
+*.tmp
+*.temp
+*.bak
+*.swp
+*.orig
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+.coverage.*
+htmlcov/
+.venv*/
+venv/
+env/
+ENV/
+*.egg-info/
+build/
+dist/
+
+# FastAPI/Uvicorn specific
+*.db
+
+# Serena cache
+.serena/cache/
+.serena/memories/
+
+# Docker
+.dockerignore
+
+# Environment files (keep examples)
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+!.env.example
+
+# Data directories
+data/raw/
+data/interim/
+data/processed/
+
+# Jupyter Notebooks
+.ipynb_checkpoints/
+
+# Package lock files (keep these)
+!pyproject.toml
+!requirements*.txt
+!uv.lock

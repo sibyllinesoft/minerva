@@ -21,7 +21,7 @@ class ServerConfig(BaseModel):
 
 class DatabaseConfig(BaseModel):
     """Database configuration."""
-    url: str = "postgresql+asyncpg://metamcp:metamcp_dev@localhost:5432/metamcp"
+    url: str = Field(default_factory=lambda: os.getenv("DATABASE_URL", "postgresql+asyncpg://metamcp:metamcp_dev@localhost:5432/metamcp"))
     pool_size: int = 10
     max_overflow: int = 20
     echo: bool = False
@@ -112,9 +112,9 @@ class SecretsConfig(BaseModel):
 
 class SecurityConfig(BaseModel):
     """Security configuration."""
-    admin_username: str = "admin"
-    admin_password: str = "admin123"
-    secret_key: str = "dev-secret-key-change-me"
+    admin_username: str = Field(default_factory=lambda: os.getenv("ADMIN_USERNAME", "admin"))
+    admin_password: str = Field(default_factory=lambda: os.getenv("ADMIN_PASSWORD", ""))
+    secret_key: str = Field(default_factory=lambda: os.getenv("SECRET_KEY", ""))
     secrets: SecretsConfig = SecretsConfig()
 
 
