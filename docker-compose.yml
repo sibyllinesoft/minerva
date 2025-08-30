@@ -4,9 +4,9 @@ services:
   postgres:
     image: pgvector/pgvector:pg16
     environment:
-      POSTGRES_DB: metamcp
-      POSTGRES_USER: metamcp
-      POSTGRES_PASSWORD: metamcp_dev
+      POSTGRES_DB: minerva
+      POSTGRES_USER: minerva
+      POSTGRES_PASSWORD: minerva_dev
       # Optimized for laptop development
       POSTGRES_SHARED_BUFFERS: 256MB
       POSTGRES_WORK_MEM: 16MB
@@ -17,19 +17,19 @@ services:
       - postgres_data:/var/lib/postgresql/data
       - ./scripts/init_db.sql:/docker-entrypoint-initdb.d/init_db.sql
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U metamcp -d metamcp"]
+      test: ["CMD-SHELL", "pg_isready -U minerva -d minerva"]
       interval: 5s
       timeout: 5s
       retries: 5
     networks:
-      - metamcp
+      - minerva
 
-  meta-mcp:
+  minerva:
     build: .
     ports:
       - "8000:8000"
     environment:
-      DATABASE_URL: postgresql+asyncpg://metamcp:metamcp_dev@postgres:5432/metamcp
+      DATABASE_URL: postgresql+asyncpg://minerva:minerva_dev@postgres:5432/minerva
       CONFIG_PATH: /app/config/development.yaml
       LOG_LEVEL: INFO
       PYTHONPATH: /app
@@ -41,7 +41,7 @@ services:
       postgres:
         condition: service_healthy
     networks:
-      - metamcp
+      - minerva
     profiles:
       - full
 
@@ -53,7 +53,7 @@ services:
     volumes:
       - redis_data:/data
     networks:
-      - metamcp
+      - minerva
     profiles:
       - full
 
@@ -62,5 +62,5 @@ volumes:
   redis_data:
 
 networks:
-  metamcp:
+  minerva:
     driver: bridge

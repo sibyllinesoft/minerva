@@ -1,10 +1,10 @@
-# Meta MCP
+# Minerva
 
-A local-first Meta MCP (Model Context Protocol) server that discovers, aggregates, and intelligently orchestrates multiple upstream MCP servers.
+An intelligent MCP (Model Context Protocol) orchestration system that discovers, aggregates, and intelligently orchestrates multiple upstream MCP servers.
 
 ## Overview
 
-Meta MCP is a sophisticated monolith that provides:
+Minerva is a sophisticated intelligent orchestration system that provides:
 
 - **Discovery & Aggregation**: Automatically discover and normalize tools from multiple upstream MCP servers
 - **Intelligent Selection**: Hybrid search using BM25 (Tantivy) + dense embeddings (ONNX) with cross-encoder reranking
@@ -26,7 +26,7 @@ Meta MCP is a sophisticated monolith that provides:
 1. **Clone and setup**:
    ```bash
    git clone <repository-url>
-   cd meta-mcp
+   cd minerva
    pip install -e ".[dev]"
    ```
 
@@ -51,7 +51,7 @@ Meta MCP is a sophisticated monolith that provides:
 ### Full Stack with Docker
 
 ```bash
-# Start everything (PostgreSQL + Meta MCP + Redis)
+# Start everything (PostgreSQL + Minerva + Redis)
 docker-compose --profile full up -d
 
 # Check health
@@ -86,7 +86,7 @@ server:
   port: 8000
 
 database:
-  url: "postgresql+asyncpg://metamcp:metamcp_dev@localhost:5432/metamcp"
+  url: "postgresql+asyncpg://minerva:minerva_dev@localhost:5432/minerva"
 
 selection_modes:
   fast:

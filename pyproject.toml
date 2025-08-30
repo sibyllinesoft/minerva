@@ -3,16 +3,16 @@ requires = ["setuptools>=61.0", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "meta-mcp"
+name = "minerva"
 version = "0.1.0"
-description = "A local-first Meta MCP server for aggregating and orchestrating multiple MCP servers"
+description = "An intelligent MCP orchestration system for aggregating and orchestrating multiple MCP servers"
 readme = "README.md"
 requires-python = ">=3.11"
 license = {text = "MIT"}
 authors = [
-    {name = "Meta MCP Team", email = "team@example.com"}
+    {name = "Minerva Team", email = "team@example.com"}
 ]
-keywords = ["mcp", "model-context-protocol", "ai", "llm", "tool-orchestration"]
+keywords = ["mcp", "model-context-protocol", "ai", "llm", "tool-orchestration", "minerva"]
 classifiers = [
     "Development Status :: 3 - Alpha",
     "Intended Audience :: Developers",
@@ -105,13 +105,13 @@ cloud = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/example/meta-mcp"
-Repository = "https://github.com/example/meta-mcp"
-Documentation = "https://meta-mcp.readthedocs.io"
-Issues = "https://github.com/example/meta-mcp/issues"
+Homepage = "https://github.com/example/minerva"
+Repository = "https://github.com/example/minerva"
+Documentation = "https://minerva.readthedocs.io"
+Issues = "https://github.com/example/minerva/issues"
 
 [project.scripts]
-meta-mcp = "app.cli:main"
+minerva = "app.cli:main"
 
 [tool.setuptools.packages.find]
 where = ["."]

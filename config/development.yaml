@@ -1,4 +1,4 @@
-# Meta MCP Development Configuration
+# Minerva Development Configuration
 # This file defines the development profile with fast, local-first settings
 
 server:
@@ -12,7 +12,7 @@ server:
     - "http://localhost:8080"
 
 database:
-  url: "postgresql+asyncpg://metamcp:metamcp_dev@localhost:5432/metamcp"
+  url: "postgresql+asyncpg://minerva:minerva_dev@localhost:5432/minerva"
   pool_size: 10
   max_overflow: 20
   echo: false  # Set to true for SQL debugging
@@ -124,7 +124,7 @@ observability:
   
   # OpenTelemetry configuration
   otel:
-    service_name: "meta-mcp-dev"
+    service_name: "minerva-dev"
     service_version: "0.1.0"
     
   # Prometheus metrics
